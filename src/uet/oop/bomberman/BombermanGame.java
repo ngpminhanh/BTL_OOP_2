@@ -12,26 +12,35 @@ import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
-    public static final int WIDTH = 25;
-    public static final int HEIGHT = 25;
-    
+
+    public static int WIDTH = 25;
+    public static int HEIGHT = 15;
+    public static int _width = 0;
+    public static int _height = 0;
+    public static int _level = 1;
+
+    private Bomber player = new Bomber(1, 1, Sprite.player_right.getFxImage());
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
+    private Stage mainStage;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws FileNotFoundException {
+        this.mainStage = stage;
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -60,7 +69,7 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-        Entity bomber = new Bomber(1,1, Sprite.player_right.getFxImage());
+        Entity bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomber);
         scene.setOnKeyPressed(event -> ((Bomber) bomber).handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> ((Bomber) bomber).handleKeyReleasedEvent(event.getCode()));
@@ -68,26 +77,56 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+        final File fileName = new File("D:\\Duc\\BTL_OOP_2\\res\\levels\\Level1.txt");
+        try (FileReader inputFile = new FileReader(fileName)) {
+            Scanner sc = new Scanner(inputFile);
+            //String line = sc.nextLine();
 
+            StringTokenizer tokens = new StringTokenizer(sc.nextLine());
+            _level = Integer.parseInt(tokens.nextToken());
+            _height = Integer.parseInt(tokens.nextToken());
+            _width = Integer.parseInt(tokens.nextToken());
+
+            while (sc.hasNextLine()) {
+                for (int i = 0; i < _height; ++i) {
+                    String lineTile = sc.nextLine();
+                    StringTokenizer tokenTile = new StringTokenizer(lineTile);
+
+                    for (int j = 0; j < _width; j++) {
+                        int s = Integer.parseInt(tokenTile.nextToken());
+                        Entity entity;
+                        switch (s) {
+                            /**case 1:
+                                entity = new Portal(j, i, Sprite.grass.getFxImage());
+                                s = 0;
+                                break;*/
+                            case 2:
+                                entity = new Wall(j, i, Sprite.wall.getFxImage());
+                                break;
+                            case 3:
+                                entity = new Brick(j, i, Sprite.brick.getFxImage());
+                                break;
+                            /**case 6:
+                                entity = new SpeedItem(j, i, Sprite.brick.getFxImage());
+                                break;*/
+                            /**case 7:
+                                entity = new FlameItem(j, i, Sprite.brick.getFxImage());
+                                break;*/
+                            default:
+                                entity = new Grass(j, i, Sprite.grass.getFxImage());
+                        }
+                        stillObjects.add(entity);
+                    }
                 }
-                stillObjects.add(object);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 
     public void update() {
         entities.forEach(Entity::update);
-
-
+        stillObjects.forEach(Entity::update);
     }
 
     public void render() {
