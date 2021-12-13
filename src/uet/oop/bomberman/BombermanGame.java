@@ -27,11 +27,12 @@ public class BombermanGame extends Application {
     public static int _height = 0;
     public static int _level = 1;
 
-    private Bomber player = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    private Bomber bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
+    public static final List<Entity> flameList = new ArrayList<>();
     private Stage mainStage;
 
     public static void main(String[] args) {
@@ -69,7 +70,7 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-        Entity bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        //Entity bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomber);
         scene.setOnKeyPressed(event -> ((Bomber) bomber).handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> ((Bomber) bomber).handleKeyReleasedEvent(event.getCode()));
@@ -77,7 +78,12 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        final File fileName = new File("D:\\Duc\\BTL_OOP_2\\res\\levels\\Level1.txt");
+        entities.add(new Balloon(4,4,Sprite.balloom_left1.getFxImage()));
+        entities.add(new Balloon(9, 9, Sprite.balloom_left1.getFxImage()));
+        entities.add(new Balloon(22,6,Sprite.balloom_left1.getFxImage()));
+        entities.add(new Oneal(7,6,Sprite.oneal_left1.getFxImage()));
+        entities.add(new Oneal(13,8,Sprite.oneal_left1.getFxImage()));
+        File fileName = new File("res\\levels\\Level1.txt");
         try (FileReader inputFile = new FileReader(fileName)) {
             Scanner sc = new Scanner(inputFile);
 
@@ -87,11 +93,6 @@ public class BombermanGame extends Application {
             _width = Integer.parseInt(tokens.nextToken());
 
             while (sc.hasNextLine()) {
-                entities.add(new Balloon(4,4,Sprite.balloom_left1.getFxImage()));
-                entities.add(new Balloon(9, 9, Sprite.balloom_left1.getFxImage()));
-                entities.add(new Balloon(22,6,Sprite.balloom_left1.getFxImage()));
-                entities.add(new Oneal(7,6,Sprite.oneal_left1.getFxImage()));
-                entities.add(new Oneal(13,8,Sprite.oneal_left1.getFxImage()));
                 for (int i = 0; i < _height; ++i) {
                     StringTokenizer tokenizer = new StringTokenizer(sc.nextLine());
 
@@ -130,11 +131,15 @@ public class BombermanGame extends Application {
     public void update() {
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+        List<Bomb> bombs = bomber.getBombs();
+        bombs.forEach(Bomb::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        List<Bomb> bombs = bomber.getBombs();
+        bombs.forEach(g -> g.render(gc));
     }
 }

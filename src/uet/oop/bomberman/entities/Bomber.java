@@ -18,12 +18,13 @@ public class Bomber extends Character {
     private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
     private int radius;
+
     public Bomber(int x, int y, Image image) {
         super(x, y, image);
         setSpeed(10);
         setNumberofBomb(1);
-
     }
+
     @Override
     public void update() {
         if (direction == KeyCode.LEFT) {
@@ -49,8 +50,7 @@ public class Bomber extends Character {
             int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
             Bomb abomb = new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius);
             bombs.add(abomb);
-            //numberofBomb = numberofBomb - 1;
-            img = Sprite.bomb_2.getFxImage();
+            numberofBomb -= 1;
         }
     }
 
@@ -66,6 +66,7 @@ public class Bomber extends Character {
             placeBomb();
         }
     }
+
     public void handleKeyReleasedEvent(KeyCode keyCode) {
         if (direction == keyCode) {
             if (direction == KeyCode.LEFT) {
@@ -122,5 +123,9 @@ public class Bomber extends Character {
 
     public void setNumberofBomb(int numberofBomb) {
         this.numberofBomb = numberofBomb;
+    }
+
+    public List<Bomb> getBombs() {
+        return bombs;
     }
 }
