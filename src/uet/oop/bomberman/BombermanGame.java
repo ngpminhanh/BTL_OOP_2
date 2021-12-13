@@ -22,7 +22,7 @@ import java.util.List;
 public class BombermanGame extends Application {
 
     public static int WIDTH = 25;
-    public static int HEIGHT = 15;
+    public static int HEIGHT = 16;
     public static int _width = 0;
     public static int _height = 0;
     public static int _level = 1;
@@ -80,7 +80,6 @@ public class BombermanGame extends Application {
         final File fileName = new File("D:\\Duc\\BTL_OOP_2\\res\\levels\\Level1.txt");
         try (FileReader inputFile = new FileReader(fileName)) {
             Scanner sc = new Scanner(inputFile);
-            //String line = sc.nextLine();
 
             StringTokenizer tokens = new StringTokenizer(sc.nextLine());
             _level = Integer.parseInt(tokens.nextToken());
@@ -88,12 +87,16 @@ public class BombermanGame extends Application {
             _width = Integer.parseInt(tokens.nextToken());
 
             while (sc.hasNextLine()) {
+                entities.add(new Balloon(4,4,Sprite.balloom_left1.getFxImage()));
+                entities.add(new Balloon(9, 9, Sprite.balloom_left1.getFxImage()));
+                entities.add(new Balloon(22,6,Sprite.balloom_left1.getFxImage()));
+                entities.add(new Oneal(7,6,Sprite.oneal_left1.getFxImage()));
+                entities.add(new Oneal(13,8,Sprite.oneal_left1.getFxImage()));
                 for (int i = 0; i < _height; ++i) {
-                    String lineTile = sc.nextLine();
-                    StringTokenizer tokenTile = new StringTokenizer(lineTile);
+                    StringTokenizer tokenizer = new StringTokenizer(sc.nextLine());
 
                     for (int j = 0; j < _width; j++) {
-                        int s = Integer.parseInt(tokenTile.nextToken());
+                        int s = Integer.parseInt(tokenizer.nextToken());
                         Entity entity;
                         switch (s) {
                             /**case 1:
