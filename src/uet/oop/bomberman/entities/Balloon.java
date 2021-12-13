@@ -39,6 +39,7 @@ public class Balloon extends Enermy {
     public void goUp() {
         super.goUp();
         img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2, Sprite.balloom_left3, up++, 18).getFxImage();
+        move();
 
     }
 
@@ -53,6 +54,7 @@ public class Balloon extends Enermy {
         super.stay();
         direction = _ai.caculateDirection();
     }
+
 
 
 }

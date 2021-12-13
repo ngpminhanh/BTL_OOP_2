@@ -9,12 +9,19 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bomber extends Character {
+    private boolean pressBomb = false;
+    private int numberofBomb;
+    private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
+    private int radius;
     public Bomber(int x, int y, Image image) {
         super(x, y, image);
         setSpeed(10);
+        setNumberofBomb(1);
 
     }
     @Override
@@ -31,14 +38,32 @@ public class Bomber extends Character {
         if (direction == KeyCode.DOWN) {
             goDown();
         }
+        if (pressBomb) {
+            placeBomb();
+        }
     }
+
+    public void placeBomb() {
+        if (numberofBomb > 0) {
+            int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
+            int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
+            Bomb abomb = new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius);
+            bombs.add(abomb);
+            //numberofBomb = numberofBomb - 1;
+            img = Sprite.bomb_2.getFxImage();
+        }
+    }
+
     public void handleKeyPressedEvent(KeyCode keyCode) {
 
         if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT
                 || keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) {
             this.direction = keyCode;
             move();
-
+        }
+        if (keyCode == KeyCode.SPACE) {
+            pressBomb = true;
+            placeBomb();
         }
     }
     public void handleKeyReleasedEvent(KeyCode keyCode) {
@@ -61,6 +86,9 @@ public class Bomber extends Character {
             }
             direction = null;
         }
+        if (keyCode == KeyCode.SPACE) {
+            pressBomb = false;
+        }
 
     }
 
@@ -82,5 +110,17 @@ public class Bomber extends Character {
     public void goDown() {
         super.goDown();
         img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public int getNumberofBomb() {
+        return numberofBomb;
+    }
+
+    public void setNumberofBomb(int numberofBomb) {
+        this.numberofBomb = numberofBomb;
     }
 }

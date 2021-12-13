@@ -16,6 +16,8 @@ public abstract class Entity {
 
     protected Image img;
     protected int layer;
+    protected boolean alive;
+
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -62,5 +64,11 @@ public abstract class Entity {
     }
     public int getLayer() {
         return layer;
+    }
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+    public boolean isAlive() {
+        return alive;
     }
 }

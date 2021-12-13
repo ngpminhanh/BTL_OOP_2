@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 25;
+    public static final int HEIGHT = 25;
     
     private GraphicsContext gc;
     private Canvas canvas;
@@ -40,7 +40,7 @@ public class BombermanGame extends Application {
         Group root = new Group();
         root.getChildren().add(canvas);
 
-        Image icon = new Image("file:C:\\Users\\BENH VIEN CONG NGHE\\OneDrive\\Desktop\\BTL_OOP_2\\src\\uet\\oop\\bomberman\\logo\\Minh Anh.png");
+        Image icon = new Image("file:src/uet/oop/bomberman/logo/Minh Anh.png");
         stage.getIcons().add(icon);
         stage.setTitle("BombermanGame");
         // Tao scene
@@ -60,13 +60,11 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
+        Entity bomber = new Bomber(1,1, Sprite.player_right.getFxImage());
+        entities.add(bomber);
+        scene.setOnKeyPressed(event -> ((Bomber) bomber).handleKeyPressedEvent(event.getCode()));
+        scene.setOnKeyReleased(event -> ((Bomber) bomber).handleKeyReleasedEvent(event.getCode()));
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
-        Entity balloon = new Balloon(3, 1, Sprite.balloom_left3.getFxImage() );
-        entities.add(balloon);
-        scene.setOnKeyPressed(event -> ((Bomber) bomberman).handleKeyPressedEvent(event.getCode()));
-        scene.setOnKeyReleased(event -> ((Bomber) bomberman).handleKeyReleasedEvent(event.getCode()));
     }
 
     public void createMap() {
