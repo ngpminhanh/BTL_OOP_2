@@ -30,9 +30,9 @@ public class BombermanGame extends Application {
     private Bomber bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
-    public static final List<Entity> flameList = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> flames = new ArrayList<>();
     private Stage mainStage;
 
     public static void main(String[] args) {
@@ -110,12 +110,12 @@ public class BombermanGame extends Application {
                             case 3:
                                 entity = new Brick(j, i, Sprite.brick.getFxImage());
                                 break;
-                            /**case 6:
+                            case 6:
                                 entity = new SpeedItem(j, i, Sprite.brick.getFxImage());
-                                break;*/
-                            /**case 7:
+                                break;
+                            case 7:
                                 entity = new FlameItem(j, i, Sprite.brick.getFxImage());
-                                break;*/
+                                break;
                             default:
                                 entity = new Grass(j, i, Sprite.grass.getFxImage());
                         }
@@ -131,8 +131,11 @@ public class BombermanGame extends Application {
     public void update() {
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+        for (int i = 0; i < flames.size(); i++)
+            flames.get(i).update();
         List<Bomb> bombs = bomber.getBombs();
         bombs.forEach(Bomb::update);
+
     }
 
     public void render() {
@@ -141,5 +144,6 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         List<Bomb> bombs = bomber.getBombs();
         bombs.forEach(g -> g.render(gc));
+        flames.forEach(g -> g.render(gc));
     }
 }
