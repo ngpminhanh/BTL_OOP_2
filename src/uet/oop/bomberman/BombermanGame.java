@@ -26,14 +26,21 @@ public class BombermanGame extends Application {
     public static int _width = 0;
     public static int _height = 0;
     public static int _level = 1;
+    public static int score = 0;
 
-    private Bomber bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> flames = new ArrayList<>();
+    public static final List<Enermy> enemies = new ArrayList<>();
     private Stage mainStage;
+    public static int startBomb = 1;
+    public static int startSpeed = 5;
+    public static int startFlame = 1;
+    public static boolean check = false;
+    public static int countTime = 0;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -78,11 +85,11 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        entities.add(new Balloon(4,4,Sprite.balloom_left1.getFxImage()));
+        entities.add(new Balloon(4, 4, Sprite.balloom_left1.getFxImage()));
         entities.add(new Balloon(9, 9, Sprite.balloom_left1.getFxImage()));
-        entities.add(new Balloon(22,6,Sprite.balloom_left1.getFxImage()));
-        entities.add(new Oneal(7,6,Sprite.oneal_left1.getFxImage()));
-        entities.add(new Oneal(13,8,Sprite.oneal_left1.getFxImage()));
+        entities.add(new Balloon(22, 6, Sprite.balloom_left1.getFxImage()));
+        entities.add(new Oneal(7, 6, Sprite.oneal_left1.getFxImage()));
+        entities.add(new Oneal(13, 8, Sprite.oneal_left1.getFxImage()));
         File fileName = new File("res\\levels\\Level1.txt");
         try (FileReader inputFile = new FileReader(fileName)) {
             Scanner sc = new Scanner(inputFile);
@@ -101,9 +108,9 @@ public class BombermanGame extends Application {
                         Entity entity;
                         switch (s) {
                             /**case 1:
-                                entity = new Portal(j, i, Sprite.grass.getFxImage());
-                                s = 0;
-                                break;*/
+                             entity = new Portal(j, i, Sprite.grass.getFxImage());
+                             s = 0;
+                             break;*/
                             case 2:
                                 entity = new Wall(j, i, Sprite.wall.getFxImage());
                                 break;
@@ -137,6 +144,8 @@ public class BombermanGame extends Application {
         List<Bomb> bombs = bomber.getBombs();
         bombs.forEach(Bomb::update);
         stillObjects.forEach(Entity::update);
+        bomber.handleCollisions();
+        bomber.checkCollisionFlame();
     }
 
     public void render() {
@@ -145,6 +154,14 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         List<Bomb> bombs = bomber.getBombs();
         bombs.forEach(g -> g.render(gc));
+        coutTime();
         flames.forEach(g -> g.render(gc));
+        bomber.render(gc);
+    }
+
+    public void coutTime() {
+        if (countTime < 200 * 60) {
+            countTime++;
+        }
     }
 }

@@ -67,9 +67,9 @@ public class Flame extends Entity {
         //img = Sprite.explosion_horizontal_right_last.getFxImage();
         BombermanGame.flames.add(new Flame(xf, yf, Sprite.bomb_exploded.getFxImage(), 0));
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < right; i++) {
             Flame flame = new Flame(xf + (i + 1), yf);
-            if (i == 2 - 1) {
+            if (i == right - 1) {
                 flame.img = Sprite.explosion_horizontal_right_last.getFxImage();
                // img = Sprite.explosion_horizontal_right_last.getFxImage();
                 flame.direction = 2;
@@ -81,9 +81,9 @@ public class Flame extends Entity {
             BombermanGame.flames.add(flame);
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < left; i++) {
             Flame flame = new Flame(xf - (i + 1), yf);
-            if (i == 2 - 1) {
+            if (i == left - 1) {
                 flame.img = Sprite.explosion_horizontal_left_last.getFxImage();
                 flame.direction = 3;
             } else {
@@ -93,9 +93,9 @@ public class Flame extends Entity {
             BombermanGame.flames.add(flame);
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < top; i++) {
             Flame flame = new Flame(xf, yf - (i + 1));
-            if (i == 2 - 1) {
+            if (i == top - 1) {
                 flame.img = Sprite.explosion_vertical_top_last.getFxImage();
                 flame.direction = 5;
             } else {
@@ -105,9 +105,9 @@ public class Flame extends Entity {
             BombermanGame.flames.add(flame);
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < down; i++) {
             Flame flame = new Flame(xf, yf + (i + 1));
-            if (i == 2 - 1) {
+            if (i == down - 1) {
                 flame.img = Sprite.explosion_vertical_down_last.getFxImage();
                 flame.direction = 6;
             } else {

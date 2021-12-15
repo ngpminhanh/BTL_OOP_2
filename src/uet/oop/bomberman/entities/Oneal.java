@@ -7,7 +7,7 @@ public class Oneal extends Enermy{
     protected boolean alive;
     public Oneal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-       // setLayer(1);
+        setLayer(1);
         setSpeed(2);
         _ai = new AIHigh(new Bomber(1, 1, Sprite.player_right.getFxImage()),this);
         direction = _ai.caculateDirection();

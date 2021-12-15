@@ -7,7 +7,7 @@ public class Balloon extends Enermy {
     protected boolean alive;
     public Balloon(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        //setLayer(1);
+        setLayer(1);
         setSpeed(1);
         _ai = new AILow();
         direction = _ai.caculateDirection();

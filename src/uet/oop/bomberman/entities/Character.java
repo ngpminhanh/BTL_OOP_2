@@ -6,6 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.awt.*;
 
 public abstract class Character extends Entity{
+    protected final int MAX_ANIMATE = 7500;
     protected int desX = x;
     protected int desY = y;
     protected int speed;
@@ -13,8 +14,10 @@ public abstract class Character extends Entity{
     protected int right = 0;
     protected int up = 0;
     protected int down = 0;
+
     public Character(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        alive = true;
     }
     public void setSpeed(int speed) {
         this.speed = speed;
@@ -44,9 +47,12 @@ public abstract class Character extends Entity{
         desX = x;
         desY = y;
     }
-    @Override
-    public void update() {
 
+    public Rectangle getBounds() {
+        return new Rectangle(desX, desY, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+    }
+    public Rectangle getBoundArea(int n){
+        return new Rectangle(desX-Sprite.SCALED_SIZE*n, desY-Sprite.SCALED_SIZE*n, Sprite.SCALED_SIZE*(1+2*n), Sprite.SCALED_SIZE*(1+2*n));
     }
 
 }

@@ -12,7 +12,7 @@ public class Bomb extends Character{
     public static int currentBomb = 0;
     private int timeCounter = 0;
     int radius;
-   private int xx;
+    private int xx;
     private int yy;
 
     public Bomb(int x, int y, Image img) {
@@ -31,7 +31,7 @@ public class Bomb extends Character{
 
     @Override
     public void update() {
-       if (timeCounter ++ == 120) {
+        if (timeCounter ++ == 120) {
             exploded(xx, yy);
         }
         img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeCounter, 60).getFxImage();
@@ -41,10 +41,10 @@ public class Bomb extends Character{
     }
 
     public void exploded(int x_bom, int y_bom) {
-       // BombermanGame.flames.add(new Flame(x_bom, y_bom, Sprite.bomb_exploded.getFxImage(), 0));
+        // BombermanGame.flames.add(new Flame(x_bom, y_bom, Sprite.bomb_exploded.getFxImage(), 0));
         //img = Sprite.explosion_horizontal_right_last.getFxImage();
         //flameList.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
-      // BombermanGame.flames.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
+        // BombermanGame.flames.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
 
         Flame flame = new Flame(x_bom,y_bom);
         flame.setRadius(radius);

@@ -16,7 +16,7 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
-
+    protected int animated = 0;
     protected Image img;
     protected int layer;
     protected boolean alive;
