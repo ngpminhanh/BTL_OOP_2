@@ -18,9 +18,13 @@ public class Bomber extends Character {
     private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
     private int radius;
+    private int xbomber;
+    private int ybomber;
 
     public Bomber(int x, int y, Image image) {
         super(x, y, image);
+        this.xbomber = x;
+        this.ybomber = y;
         setSpeed(10);
         setNumberofBomb(1);
     }
@@ -39,18 +43,24 @@ public class Bomber extends Character {
         if (direction == KeyCode.DOWN) {
             goDown();
         }
-        if (pressBomb) {
+        if (direction == KeyCode.SPACE) {
             placeBomb();
         }
     }
 
     public void placeBomb() {
         if (numberofBomb > 0) {
-            int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
-            int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
+
+            int xB = (int) Math.round((x) / (double) Sprite.SCALED_SIZE);
+            int yB = (int) Math.round((y) / (double) Sprite.SCALED_SIZE);
+            for (Bomb bomb : bombs) {
+                if (xB * Sprite.SCALED_SIZE == bomb.getX() && yB * Sprite.SCALED_SIZE == bomb.getY()) return;
+            }
             Bomb abomb = new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius);
             bombs.add(abomb);
-            numberofBomb -= 1;
+
+            //abomb.exploded();
+          //  numberofBomb -= 1;
         }
     }
 
@@ -62,8 +72,9 @@ public class Bomber extends Character {
             move();
         }
         if (keyCode == KeyCode.SPACE) {
+            this.direction = keyCode;
             pressBomb = true;
-            placeBomb();
+           // placeBomb();
         }
     }
 
@@ -128,4 +139,5 @@ public class Bomber extends Character {
     public List<Bomb> getBombs() {
         return bombs;
     }
+
 }
