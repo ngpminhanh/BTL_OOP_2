@@ -28,7 +28,7 @@ public class BombermanGame extends Application {
     public static int _level = 1;
     public static int score = 0;
 
-    public static Bomber bomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static Bomber bomber = new Bomber(10, 5, Sprite.player_right.getFxImage());
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();

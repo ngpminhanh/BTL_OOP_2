@@ -8,12 +8,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bomb extends Character{
+import static uet.oop.bomberman.BombermanGame.bomber;
+
+public class Bomb extends Character {
     public static int currentBomb = 0;
     private int timeCounter = 0;
     int radius;
-    private int xx;
-    private int yy;
 
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
@@ -23,16 +23,14 @@ public class Bomb extends Character{
 
     public Bomb(int xUnit, int yUnit, Image img, int radius) {
         super(xUnit, yUnit, img);
-        this.xx = xUnit;
-        this.yy = yUnit;
         setLayer(2);
         this.radius = radius;
     }
 
     @Override
     public void update() {
-        if (timeCounter ++ == 120) {
-            exploded(xx, yy);
+        if (timeCounter++ == 120) {
+            exploded();
         }
         img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeCounter, 60).getFxImage();
         //exploded(xx, yy);
@@ -40,13 +38,13 @@ public class Bomb extends Character{
 
     }
 
-    public void exploded(int x_bom, int y_bom) {
+    public void exploded() {
         // BombermanGame.flames.add(new Flame(x_bom, y_bom, Sprite.bomb_exploded.getFxImage(), 0));
         //img = Sprite.explosion_horizontal_right_last.getFxImage();
         //flameList.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
         // BombermanGame.flames.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
 
-        Flame flame = new Flame(x_bom,y_bom);
+        Flame flame = new Flame(x, y);
         flame.setRadius(radius);
         flame.render_explosion();
     }

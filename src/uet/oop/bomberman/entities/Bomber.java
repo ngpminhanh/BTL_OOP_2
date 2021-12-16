@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//import static uet.oop.bomberman.BombermanGame.enemies;
 import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.BombermanGame.bomber;
 import static uet.oop.bomberman.Sound.*;
@@ -21,17 +20,13 @@ public class Bomber extends Character {
     private final List<Bomb> bombs = new ArrayList<>();
     private KeyCode direction = null;
     private int radius;
-    private int xbomber;
-    private int ybomber;
     private int timeAfterDie = 0;
     private int power;
     public static int live = 3;
 
     public Bomber(int x, int y, Image image) {
         super(x, y, image);
-        this.xbomber = x;
-        this.ybomber = y;
-        setSpeed(10);
+        setSpeed(2);
         setNumberofBomb(1);
         setPower(1);
         setRadius(1);

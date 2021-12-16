@@ -7,8 +7,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.awt.*;
 
 public class Flame extends Entity {
-    private int xf;
-    private int yf;
     private int left;
     private int right;
     private int top;
@@ -20,18 +18,17 @@ public class Flame extends Entity {
 
     public Flame(int x, int y) {
         super(x, y);
-        this.xf = x;
-        this.yf = y;
     }
 
     public Flame(int x, int y, Image img) {
-        super(x, y, img);
+        super(x, y);
+        this.img = img;
         this.radius = 2;
     }
 
     public Flame(int x, int y, Image img, int direction) {
-        super(x, y, img);
-
+        super(x, y);
+        this.img = img;
         this.direction = direction;
     }
 
@@ -52,23 +49,19 @@ public class Flame extends Entity {
     }
 
     public void render_explosion() {
-       /* right();
+        right();
         left();
         top();
-        down(); */
-        right = 2;
-        left = 2;
-        top = 2;
-        down = 2;
+        down();
         create_explosion();
     }
 
     public void create_explosion() {
         //img = Sprite.explosion_horizontal_right_last.getFxImage();
-        BombermanGame.flames.add(new Flame(xf, yf, Sprite.bomb_exploded.getFxImage(), 0));
+        BombermanGame.flames.add(new Flame(x, y, Sprite.bomb_exploded.getFxImage(), 0));
 
         for (int i = 0; i < right; i++) {
-            Flame flame = new Flame(xf + (i + 1), yf);
+            Flame flame = new Flame(x + (i + 1) * size, y);
             if (i == right - 1) {
                 flame.img = Sprite.explosion_horizontal_right_last.getFxImage();
                // img = Sprite.explosion_horizontal_right_last.getFxImage();
@@ -82,7 +75,7 @@ public class Flame extends Entity {
         }
 
         for (int i = 0; i < left; i++) {
-            Flame flame = new Flame(xf - (i + 1), yf);
+            Flame flame = new Flame(x - (i + 1) * size, y);
             if (i == left - 1) {
                 flame.img = Sprite.explosion_horizontal_left_last.getFxImage();
                 flame.direction = 3;
@@ -94,7 +87,7 @@ public class Flame extends Entity {
         }
 
         for (int i = 0; i < top; i++) {
-            Flame flame = new Flame(xf, yf - (i + 1));
+            Flame flame = new Flame(x, y - (i + 1) * size);
             if (i == top - 1) {
                 flame.img = Sprite.explosion_vertical_top_last.getFxImage();
                 flame.direction = 5;
@@ -106,7 +99,7 @@ public class Flame extends Entity {
         }
 
         for (int i = 0; i < down; i++) {
-            Flame flame = new Flame(xf, yf + (i + 1));
+            Flame flame = new Flame(x, y + (i + 1) * size);
             if (i == down - 1) {
                 flame.img = Sprite.explosion_vertical_down_last.getFxImage();
                 flame.direction = 6;
@@ -120,7 +113,7 @@ public class Flame extends Entity {
 
     private void right() {
         for (int i = 0; i < radius; i++) {
-            Rectangle rectangle = new Rectangle(xf + size * (i + 1), yf, size, size);
+            Rectangle rectangle = new Rectangle(x + size * (i + 1), y, size, size);
             if (collisionType(rectangle) instanceof Wall) {
                 right = i;
                 return;
@@ -134,7 +127,7 @@ public class Flame extends Entity {
 
     private void left() {
         for (int i = 0; i < radius; i++) {
-            Rectangle rectangle = new Rectangle(xf - size * (i + 1), yf, size, size);
+            Rectangle rectangle = new Rectangle(x - size * (i + 1), y, size, size);
             if (collisionType(rectangle) instanceof Wall) {
                 left = i;
                 return;
@@ -148,7 +141,7 @@ public class Flame extends Entity {
 
     private void top() {
         for (int i = 0; i < radius; i++) {
-            Rectangle rectangle = new Rectangle(xf, yf - size * (i + 1), size, size);
+            Rectangle rectangle = new Rectangle(x, y - size * (i + 1), size, size);
             if (collisionType(rectangle) instanceof Wall) {
                 top = i;
                 return;
@@ -162,7 +155,7 @@ public class Flame extends Entity {
 
     private void down() {
         for (int i = 0; i < radius; i++) {
-            Rectangle rectangle = new Rectangle(xf, yf + size * (i + 1), size, size);
+            Rectangle rectangle = new Rectangle(x, y + size * (i + 1), size, size);
             if (collisionType(rectangle) instanceof Wall) {
                 down = i;
                 return;

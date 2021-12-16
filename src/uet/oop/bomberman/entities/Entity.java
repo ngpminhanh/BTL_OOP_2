@@ -21,9 +21,9 @@ public abstract class Entity {
     protected int layer;
     protected boolean alive;
 
-    public Entity(int xUnit, int yUnit) {
-        this.x = xUnit * Sprite.SCALED_SIZE;
-        this.y = yUnit * Sprite.SCALED_SIZE;
+    public Entity(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
