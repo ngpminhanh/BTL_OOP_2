@@ -48,12 +48,12 @@ public class Bomber extends Character {
         }
         if (direction == KeyCode.SPACE) {
             placeBomb();
-            numberofBomb--;
         }
         for (int i = 0; i < bombs.size(); i++) {
             Bomb bomb = bombs.get(i);
             if (!bomb.isAlive()) {
                 bombs.remove(bomb);
+                numberofBomb++;
             }
         }
     }
@@ -68,9 +68,7 @@ public class Bomber extends Character {
             }
             Bomb abomb = new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius);
             bombs.add(abomb);
-
-            //abomb.exploded();
-          //  numberofBomb -= 1;
+            numberofBomb--;
         }
     }
 

@@ -140,7 +140,6 @@ public class BombermanGame extends Application {
         //stillObjects.forEach(Entity::update);
         for (int i = 0; i < flames.size(); i++)
             flames.get(i).update();
-
         List<Bomb> bombs = bomber.getBombs();
         bombs.forEach(Bomb::update);
         stillObjects.forEach(Entity::update);
