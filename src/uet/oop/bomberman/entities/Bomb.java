@@ -30,12 +30,10 @@ public class Bomb extends Character {
     @Override
     public void update() {
         if (timeCounter++ == 120) {
+            this.setAlive(false);
             exploded();
         }
         img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, timeCounter, 60).getFxImage();
-        //exploded(xx, yy);
-
-
     }
 
     public void exploded() {

@@ -48,6 +48,13 @@ public class Bomber extends Character {
         }
         if (direction == KeyCode.SPACE) {
             placeBomb();
+            numberofBomb--;
+        }
+        for (int i = 0; i < bombs.size(); i++) {
+            Bomb bomb = bombs.get(i);
+            if (!bomb.isAlive()) {
+                bombs.remove(bomb);
+            }
         }
     }
 
